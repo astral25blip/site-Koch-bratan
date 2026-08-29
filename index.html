@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Врубай музло!</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            cursor: pointer;
+            text-align: center;
+        }
+        .play-btn {
+            font-size: 24px;
+            padding: 20px 40px;
+            border: 2px solid #fff;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+        .play-btn:hover {
+            background-color: #fff;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="play-btn" id="overlay">Кликни в любом месте, чтобы запустить звук 🎵</div>
+
+    <audio id="audio" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const audio = document.getElementById('audio');
+
+        // Попытка автозапуска при загрузке
+        window.addEventListener('DOMContentLoaded', () => {
+            audio.play().then(() => {
+                document.getElementById('overlay').innerText = "🔊 Играет!";
+            }).catch(() => {
+                // Если браузер заблокировал автозапуск, ждем первого клика
+                console.log("Автозапуск заблокирован браузером. Ожидание клика.");
+            });
+        });
+
+        // Запуск по клику на любую точку экрана
+        document.body.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                document.getElementById('overlay').innerText = "🔊 Играет!";
+            }
+        });
+    </script>
+</body>
+</html>
